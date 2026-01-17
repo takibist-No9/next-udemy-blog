@@ -4,7 +4,7 @@ import PostCard from '@/components/post/PostCard';
 type SearchParams = {
   search?: string;
 };
-export default async function PostsPage({ searchParams }: SearchParams) {
+export default async function PostsPage(searchParams: Promise<SearchParams>) {
   const resolvedSearchParams = await searchParams;
   const query = resolvedSearchParams.search || '';
 
