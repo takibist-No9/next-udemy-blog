@@ -4,6 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getPost } from '@/lib/post';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/github.css';
 
 type Params = {
   params: Promise<{ id: string }>;
@@ -13,11 +17,13 @@ export default async function PostPage({ params }: Params) {
   const post = await getPost(id);
 
   if (!post) {
+    console.log('[PostPage] Post not found, calling notFound() for id:', id);
     notFound();
   }
+  console.log('[PostPage] Post found:', post.id);
   return (
     <div className="container mx-auto px-4 py-8">
-      <Card className="max-w-3l mx-auto pt-0 pb-6">
+      <Card className="max-w-3xl mx-auto pt-0 pb-6">
         {post.topImage && (
           <div className="relative w-full h-64 lg:h-96">
             <Image
@@ -31,7 +37,7 @@ export default async function PostPage({ params }: Params) {
           </div>
         )}
         <CardHeader>
-          <div className="felx justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4">
             <p className="text-sm text-gray-500">投稿者: {post.author.name}</p>
             <time className="text-sm text-gray-500">
               {format(new Date(post.createdAt), 'yyyy年M月dd日', {
@@ -39,9 +45,18 @@ export default async function PostPage({ params }: Params) {
               })}
             </time>
           </div>
-          <CardTitle className="text-3xl font-bold"></CardTitle>
+          <CardTitle className="text-3xl font-bold">{post.title}</CardTitle>
         </CardHeader>
-        <CardContent>{post.content}</CardContent>
+        <CardContent>
+          <div className="prose max-w-none">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
