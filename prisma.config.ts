@@ -10,6 +10,7 @@ export default defineConfig({
     seed: 'tsx prisma/seed.ts',
   },
   datasource: {
+    // Transaction Pooler を使用
     url: process.env['DATABASE_URL'],
   },
 });

@@ -460,6 +460,7 @@ export type PostCreateOrConnectWithoutAuthorInput = {
 
 export type PostCreateManyAuthorInputEnvelope = {
   data: Prisma.PostCreateManyAuthorInput | Prisma.PostCreateManyAuthorInput[]
+  skipDuplicates?: boolean
 }
 
 export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -1267,6 +1268,7 @@ export type PostCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Posts.
    */
   data: Prisma.PostCreateManyInput | Prisma.PostCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1285,6 +1287,7 @@ export type PostCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Posts.
    */
   data: Prisma.PostCreateManyInput | Prisma.PostCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
